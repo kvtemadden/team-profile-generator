@@ -18,7 +18,9 @@ You can access the GitHub Repo via [this link](https://github.com/kvtemadden/tea
 
 An example of the code generated for the HTML team page can be found [here](https://github.com/kvtemadden/team-profile-generator/blob/main/dist/Team-Rota.html)
 
-Or you can watch a video walkthrough for the project [here]()
+Or you can watch a video walkthrough for the project [here](https://drive.google.com/file/d/1nHIf2AuOGxDIG0TujuFjPyjpjZDothar/view?usp=sharing)
+
+If you can't access the video there, you're able to download it [here](https://github.com/kvtemadden/team-profile-generator/blob/main/assets/video_of_app.mp4)
 
 ## Functionality
 Users should locate the index.js file within this repository on their local system once they've installed it/forked the repository linked to in the screenshot section above. 
@@ -29,7 +31,7 @@ This will then provide the user with a series of questions which prompts them to
 
 The initial question will always ask for information surrounding the Manager, who must be included in every project.
 
-Manager info asked for:
+>**Manager info asked for:**
 - Name
 - Employee ID
 - Email
@@ -41,13 +43,13 @@ If they don't then they can just select that they don't want to add another user
 
 However, if they do want to add either an Engineer or an Intern, they'll be prompted for information regarding:
 
-Engineer:
+>**Engineer:**
 - Name
 - Employee ID
 - Email
 - GitHub Username
 
-Intern:
+>**Intern:**
 - Name
 - Employee ID
 - Email
