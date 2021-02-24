@@ -6,7 +6,7 @@ const Intern = require("./lib/Intern");
 var employees = 1;
 
 const mngQuestions = ["What's the manager's name?", "What's the manager's ID number?", "What's the manager's email?", "What's the manager's office phone number", "Who else do you want to add?"];
-const engQuestions = ["What's the engineer's name?", "What's the engineer's ID number?", "What's the engineer's email?", "What's the engineer's GitHub url?", "Who else do you want to add?"];
+const engQuestions = ["What's the engineer's name?", "What's the engineer's ID number?", "What's the engineer's email?", "What's the engineer's GitHub username?", "Who else do you want to add?"];
 const intQuestions = ["What's the intern's name?", "What's the intern's ID number?", "What's the intern's email?", "What school does the intern go to?", "Who else do you want to add?"];
 
 function init() {
