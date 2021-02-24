@@ -5,47 +5,19 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 var employees = 1;
 
-const mngQuestions = ["What's the manager's name?", "What's the manager's ID number?", "What's the manager's email?", "What's the manager's office phone number", "Who else do you want to add?"];
-const engQuestions = ["What's the engineer's name?", "What's the engineer's ID number?", "What's the engineer's email?", "What's the engineer's GitHub username?", "Who else do you want to add?"];
-const intQuestions = ["What's the intern's name?", "What's the intern's ID number?", "What's the intern's email?", "What school does the intern go to?", "Who else do you want to add?"];
+const mngQuestions = [{ type: "input", name: "mngName", message: "What's the manager's name?" }, { type: "input", name: "mngID", message: "What's the manager's ID number?" }, { type: "input", name: "mngEmail", message: "What's the manager's email address?" }, { type: "input", name: "officeNumber", message: "What's the manager's office phone number?" }, { type: "list", name: "mngOthers", message: "Do you want to add another team member?", choices: ['Add an Engineer', 'Add an Intern', 'I do not want to add anyone else'] }];
+const engQuestions = [{ type: "input", name: "engName", message: "What's the engineer's name?" }, { type: "input", name: "engID", message: "What's the engineer's ID number?" }, { type: "input", name: "engEmail", message: "What's the engineer's email address?" }, { type: "input", name: "engGithub", message: "What's the engineer's GitHub username?" }, { type: "list", name: "engOthers", message: "Do you want to add another team member?", choices: ['Add an Engineer', 'Add an Intern', 'I do not want to add anyone else'] }];
+const intQuestions = [{ type: "input", name: "intName", message: "What's the intern's name?" }, { type: "input", name: "intID", message: "What's the interns's ID number?" }, { type: "input", name: "intEmail", message: "What's the intern's email address?" }, { type: "input", name: "school", message: "What school does the intern go to?" }, { type: "list", name: "intOthers", message: "Do you want to add another team member?", choices: ['Add an Engineer', 'Add an Intern', 'I do not want to add anyone else'] }];
 
 function init() {
-    inquirer
-        .prompt([
-            {
-                type: 'input',
-                message: mngQuestions[0],
-                name: 'mngName',
-            },
-            {
-                type: 'input',
-                message: mngQuestions[1],
-                name: 'mngID',
-            },
-            {
-                type: 'input',
-                message: mngQuestions[2],
-                name: 'mngEmail',
-            },
-            {
-                type: 'input',
-                message: mngQuestions[3],
-                name: 'officeNumber',
-            },
-            {
-                type: 'list',
-                message: mngQuestions[4],
-                name: 'mngOthers',
-                choices: ['Add an Engineer', 'Add an Intern', 'I do not want to add anyone else']
-            }
-        ])
+    inquirer.prompt(mngQuestions)
         .then((data) => {
-            
+
             writeToFile(data);
 
             if (data.mngOthers === "Add an Engineer") {
                 return engineerQ();
-            } 
+            }
             else if (data.mngOthers === "Add an Intern") {
                 return internQ();
             }
@@ -57,100 +29,45 @@ function init() {
 }
 
 engineerQ = () => {
-    inquirer
-        .prompt([
-        {
-            type: 'input',
-            message: engQuestions[0],
-            name: 'engName',
-        },
-        {
-            type: 'input',
-            message: engQuestions[1],
-            name: 'engID',
-        },
-        {
-            type: 'input',
-            message: engQuestions[2],
-            name: 'engEmail',
-        },
-        {
-            type: 'input',
-            message: engQuestions[3],
-            name: 'engGithub',
-        },
-        {
-            type: 'list',
-            message: engQuestions[4],
-            name: 'engOthers',
-            choices: ['Add an Engineer', 'Add an Intern', 'I do not want to add anyone else']
-        }
-    ])
-    .then((data) => {
-        fs.appendFileSync('./dist/Team-Rota.html', addEng(data));
+    inquirer.prompt(engQuestions)
+        .then((data) => {
+            fs.appendFileSync('./dist/Team-Rota.html', addEng(data));
 
-        if (data.engOthers === "Add an Engineer") {
-            return engineerQ();
-        } 
-        else if (data.engOthers === "Add an Intern") {
-            return internQ();
-        }
-        else {
-            fs.appendFileSync('./dist/Team-Rota.html', endHTML());
-            return console.log("Rota generated!");
-        }
-    });
+            if (data.engOthers === "Add an Engineer") {
+                return engineerQ();
+            }
+            else if (data.engOthers === "Add an Intern") {
+                return internQ();
+            }
+            else {
+                fs.appendFileSync('./dist/Team-Rota.html', endHTML());
+                return console.log("Rota generated!");
+            }
+        });
 }
 
 internQ = () => {
     inquirer
-        .prompt([
-        {
-            type: 'input',
-            message: intQuestions[0],
-            name: 'intName',
-        },
-        {
-            type: 'input',
-            message: intQuestions[1],
-            name: 'intID',
-        },
-        {
-            type: 'input',
-            message: intQuestions[2],
-            name: 'intEmail',
-        },
-        {
-            type: 'input',
-            message: intQuestions[3],
-            name: 'school',
-        },
-        {
-            type: 'list',
-            message: intQuestions[4],
-            name: 'intOthers',
-            choices: ['Add an Engineer', 'Add an Intern', 'I do not want to add anyone else']
-        }
-    ])
-    .then((data) => {
-        fs.appendFileSync('./dist/Team-Rota.html', addInt(data));
+        .prompt(intQuestions)
+        .then((data) => {
+            fs.appendFileSync('./dist/Team-Rota.html', addInt(data));
 
-        if (data.intOthers === "Add an Engineer") {
-            return engineerQ();
-        } 
-        else if (data.intOthers === "Add an Intern") {
-            return internQ();
-        }
-        else {
-            fs.appendFileSync('./dist/Team-Rota.html', endHTML());
-            return console.log("Rota generated!");
-        }
-    });
+            if (data.intOthers === "Add an Engineer") {
+                return engineerQ();
+            }
+            else if (data.intOthers === "Add an Intern") {
+                return internQ();
+            }
+            else {
+                fs.appendFileSync('./dist/Team-Rota.html', endHTML());
+                return console.log("Rota generated!");
+            }
+        });
 }
 
 function writeToFile(data) {
     fs.writeFileSync("./dist/Team-Rota.html", coreHTML(data), (err) =>
-      err ? console.error(err) : console.log('Manager added!'));
+        err ? console.error(err) : console.log('Manager added!'));
 }
 
 function addEng(data) {
@@ -192,11 +109,11 @@ function addInt(data) {
 }
 
 function newRow() {
-    if(employees > 3 && employees % 3 == 0) {
-    fs.appendFileSync('./dist/Team-Rota.html', `</div>
+    if (employees > 3 && employees % 3 == 0) {
+        fs.appendFileSync('./dist/Team-Rota.html', `</div>
     <div class="row">
     `);
-}
+    }
 }
 
 function endHTML() {
