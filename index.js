@@ -37,6 +37,9 @@ function init() {
             }
         ])
         .then((data) => {
+
+            new Manager(data.mngName, data.mngID, data.mngEmail, data.mngGithub);
+
             if (data.mngOthers === "Add an Engineer") {
                 return engineerQ();
             } 
@@ -81,6 +84,9 @@ engineerQ = () => {
         }
     ])
     .then((data) => {
+
+        new Engineer(data.engName, data.engID, data.engEmail, data.engGithub);
+
         if (data.mngOthers === "Add an Engineer") {
             return engineerQ();
         } 
@@ -125,6 +131,9 @@ internQ = () => {
         }
     ])
     .then((data) => {
+
+        new Intern(data.intName, data.intID, data.intEmail, data.intGithub);
+
         if (data.mngOthers === "Add an Engineer") {
             return engineerQ();
         } 
@@ -139,3 +148,24 @@ internQ = () => {
 }
 
 init();
+
+function Manager(name, id, email, github) {
+    this.name = name;
+    this.id = id;
+    this.email = email;
+    this.github = github;
+}
+
+function Engineer(name, id, email, github) {
+    this.name = name;
+    this.id = id;
+    this.email = email;
+    this.github = github;
+}
+
+function Intern(name, id, email, github) {
+    this.name = name;
+    this.id = id;
+    this.email = email;
+    this.github = github;
+}
