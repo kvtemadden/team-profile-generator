@@ -1,10 +1,10 @@
 const inquirer = require('inquirer');
-// const markdown = require("./Utils/generateMarkdown");
 const fs = require('fs');
+const coreHTML = require("./generateHTML");
 
-const mngQuestions = ["What's the manager's name?", "What's the manager's ID number?", "What's the manager's email?", "What's the manager's GitHub url?", "Who else do you want to add?"];
+const mngQuestions = ["What's the manager's name?", "What's the manager's ID number?", "What's the manager's email?", "What's the manager's office phone number", "Who else do you want to add?"];
 const engQuestions = ["What's the engineer's name?", "What's the engineer's ID number?", "What's the engineer's email?", "What's the engineer's GitHub url?", "Who else do you want to add?"];
-const intQuestions = ["What's the intern's name?", "What's the intern's ID number?", "What's the intern's email?", "What's the intern's GitHub url?", "Who else do you want to add?"];
+const intQuestions = ["What's the intern's name?", "What's the intern's ID number?", "What's the intern's email?", "What school does the intern go to?", "Who else do you want to add?"];
 
 function init() {
     inquirer
@@ -27,7 +27,7 @@ function init() {
             {
                 type: 'input',
                 message: mngQuestions[3],
-                name: 'mngGithub',
+                name: 'officeNumber',
             },
             {
                 type: 'list',
@@ -37,8 +37,8 @@ function init() {
             }
         ])
         .then((data) => {
-
-            new Manager(data.mngName, data.mngID, data.mngEmail, data.mngGithub);
+            
+            writeToFile(data);
 
             if (data.mngOthers === "Add an Engineer") {
                 return engineerQ();
@@ -47,8 +47,7 @@ function init() {
                 return internQ();
             }
             else {
-                //ask second prompt
-                return console.log("here");
+                return console.log("Rota generated!");
             }
         });
 }
@@ -84,9 +83,6 @@ engineerQ = () => {
         }
     ])
     .then((data) => {
-
-        new Engineer(data.engName, data.engID, data.engEmail, data.engGithub);
-
         if (data.mngOthers === "Add an Engineer") {
             return engineerQ();
         } 
@@ -94,8 +90,7 @@ engineerQ = () => {
             return internQ();
         }
         else {
-            //ask second prompt
-            return prompt('question 2 data');
+            return console.log("Rota generated!");
         }
     });
 }
@@ -121,7 +116,7 @@ internQ = () => {
         {
             type: 'input',
             message: intQuestions[3],
-            name: 'intGithub',
+            name: 'school',
         },
         {
             type: 'list',
@@ -131,9 +126,6 @@ internQ = () => {
         }
     ])
     .then((data) => {
-
-        new Intern(data.intName, data.intID, data.intEmail, data.intGithub);
-
         if (data.mngOthers === "Add an Engineer") {
             return engineerQ();
         } 
@@ -141,31 +133,14 @@ internQ = () => {
             return internQ();
         }
         else {
-            //ask second prompt
-            return prompt('question 2 data');
+            return console.log("Rota generated!");
         }
     });
 }
 
+function writeToFile(data) {
+    fs.writeFileSync("./dist/Team-Rota.html", coreHTML(data), (err) =>
+      err ? console.error(err) : console.log('Manager added!'));
+}
+
 init();
-
-function Manager(name, id, email, github) {
-    this.name = name;
-    this.id = id;
-    this.email = email;
-    this.github = github;
-}
-
-function Engineer(name, id, email, github) {
-    this.name = name;
-    this.id = id;
-    this.email = email;
-    this.github = github;
-}
-
-function Intern(name, id, email, github) {
-    this.name = name;
-    this.id = id;
-    this.email = email;
-    this.github = github;
-}
