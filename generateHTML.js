@@ -1,7 +1,4 @@
 const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
-// const fs = require('fs');
 
 function buildCore(data) {
     let M = new Manager(data.mngName, data.mngID, data.mngEmail, data.officeNumber);
@@ -24,7 +21,7 @@ function buildCore(data) {
         </header>
         <article class="container">
             <div class="row">
-            <div class="card bg-light mb-3 col-3 mx-3" style="max-width: 18rem;">
+            <div class="card bg-light mb-3 col-4 mx-3" style="max-width: 18rem;">
                 <div class="card-header text-white bg-primary">
                 <h4>${M.name}</h4>
                 <h5 class="card-title text-white"><i class="fas fa-mug-hot"></i> Manager</h5>    
@@ -37,10 +34,7 @@ function buildCore(data) {
                       </ul>
                 </div>
               </div>
-            </div>
-        </article>
-    </body>
-    </html>`
+        `
 }
 
 
